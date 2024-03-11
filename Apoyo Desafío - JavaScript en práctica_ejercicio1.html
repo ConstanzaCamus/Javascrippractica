@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+</head>
+
+<body>
+    <div>
+        <div style="width: 40%;margin: 0 auto">
+            <h2>
+                Escríbenos !!!
+            </h2>
+            <div class="resultado" style="color:green;font-style: italic">
+            </div>
+            <form id="formulario">
+                <div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Nombre completo
+                        </label>
+                        <input id="nombre" type="text">
+                        <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Asunto
+                        </label>
+                        <input id="asunto" type="text">
+                        <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: column;">
+                    <label>
+                        Mensaje
+                    </label>
+                    <textarea id="mensaje"></textarea>
+                    <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                </div>
+                <div>
+                    <button id="botton" type="submit">
+                        Envíar mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('formulario');
+
+        form.addEventListener('submit', (event) => {
+
+            event.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const asunto = document.getElementById('asunto').value;
+            const mensaje = document.getElementById('mensaje').value;
+
+            limpiarmsjes();
+
+            let estaValidado = esValido(nombre, asunto, mensaje);
+
+            if (estaValidado) {
+                alert("Mensaje enviado con Exito !!!!");
+                form.submit();
+            }
+        });
+
+        function esValido(name, subject, message) {
+            let valido = true;
+
+            const pattern = /^[A-Za-z\s]+$/;
+
+            if (pattern.test(name) == false) {
+                valido = false;
+                document.querySelector('.errorNombre').innerHTML = 'Solo caracteres alfabeticos';
+            }
+            if (!pattern.test(subject)) {
+                valido = false;
+                document.querySelector('.errorAsunto').innerHTML = 'Solo caracteres alfabeticos';
+            }
+            if (!pattern.test(message)) {
+                valido = false;
+                document.querySelector('.errorMensaje').innerHTML = 'Solo caracteres alfabeticos';
+            }
+
+            if (name === '') {
+                valido = false;
+                document.querySelector('.errorNombre').innerHTML = 'El nombre es requerido.';
+            }
+            if (subject === '') {
+                valido = false;
+                document.querySelector('.errorAsunto').innerHTML = 'El asunto es requerido.';
+            }
+            if (message === '') {
+                valido = false;
+                document.querySelector('.errorMensaje').innerHTML = 'El mensaje es requerido.';
+            }
+            return valido;
+        }
+
+        function limpiarmsjes() {
+            document.querySelector('.errorNombre').innerHTML = '';
+            document.querySelector('.errorAsunto').innerHTML = '';
+            document.querySelector('.errorMensaje').innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>
